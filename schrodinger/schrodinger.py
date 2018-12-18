@@ -5,8 +5,7 @@
 import argparse
 import tensorflow as tf
 tf.enable_eager_execution()
-
-def create_args():
+def create_args():# pragma: no cover
 	"""
 	Read parameters from user input
 	"""	
@@ -110,8 +109,7 @@ def H_hat(c, n, v0_hat):
     H = matrix + matrix2
     return H
 
-
-def main():
+def main():# pragma: no cover
 	args = create_args()
 	c = args.c
 	n = args.size
@@ -127,6 +125,7 @@ def main():
 	e, v = tf.linalg.eigh(H)
 	print(e[0].numpy())
 	print(v[0].numpy())
+	return True
 
 
 if __name__ == '__main__':

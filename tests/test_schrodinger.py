@@ -5,7 +5,6 @@
 
 
 import unittest
-import pytest
 import tensorflow as tf
 import argparse
 import schrodinger.schrodinger as schrodinger
@@ -13,12 +12,6 @@ import math
 tf.enable_eager_execution()
 
 class TestSchrodinger(unittest.TestCase):
-	# def test_create_args(self):
-	# 	args = schrodinger.create_args()
-	# 	self.assertEqual(args.file, 'potential_energy.dat')
-	# 	self.assertEqual(args.c, 1.0)
-	# 	self.assertEqual(args.size, 5)
-
 
 	def test_open_file(self):
 		position, potential = schrodinger.open_file('potential_energy.dat')
@@ -62,7 +55,22 @@ class TestSchrodinger(unittest.TestCase):
 		potential = tf.constant(potential, shape = [1, len(potential)], dtype = tf.float32)
 		basis = schrodinger.create_basis(5)
 		coeff = schrodinger.coefficient(position, basis)
-		self.assertEqual(coeff.get_shape()[0], 5)
+		self.assertEqual(coeff.get_shape(), [len(basis), len(basis)])
+	
+
+	def test_H_hat(self):
+		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
+		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
+		c = 1
+		position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
+		potential = tf.constant(potential, shape = [1, len(potential)], dtype = tf.float32)
+		basis = schrodinger.create_basis(5)
+		v = schrodinger.v0(position, potential, basis)
+		coeff = schrodinger.coefficient(position, basis)
+		v0_hat = tf.linalg.solve(coeff, v)
+		H = schrodinger.H_hat(c, len(basis), v0_hat)
+		self.assertEqual(coeff.get_shape(), [len(basis), len(basis)])
+
 
 
 
