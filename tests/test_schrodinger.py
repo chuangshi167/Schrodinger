@@ -7,7 +7,10 @@
 import unittest
 import pytest
 import tensorflow as tf
+import argparse
 import schrodinger.schrodinger as schrodinger
+import math
+tf.enable_eager_execution()
 
 class TestSchrodinger(unittest.TestCase):
 	# def test_create_args(self):
@@ -15,7 +18,6 @@ class TestSchrodinger(unittest.TestCase):
 	# 	self.assertEqual(args.file, 'potential_energy.dat')
 	# 	self.assertEqual(args.c, 1.0)
 	# 	self.assertEqual(args.size, 5)
-	# 	self.assertEqual(args.domain, [0, 7])
 
 
 	def test_open_file(self):
@@ -23,12 +25,48 @@ class TestSchrodinger(unittest.TestCase):
 		self.assertEqual(position, [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477])
 		self.assertEqual(potential, [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0])
 	
+
+	def test_term(self):
+		term_one = schrodinger.term(0)
+		self.assertEqual(1, term_one(0).numpy())
+		term_two = schrodinger.term(1)
+		self.assertEqual(0, term_two(0).numpy())
+
+
+	def test_create_basis(self):
+		basis = schrodinger.create_basis(3)
+		a = basis[0](0).numpy()
+		b = math.cos(0)
+		self.assertEqual(a, b)
+		c = basis[1](math.pi/2).numpy()
+		d = math.sin(math.pi/2)
+		self.assertEqual(c, d)
+
+
+	def test_v0(self):
+		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
+		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
+		position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
+		potential = tf.constant(potential, shape = [1, len(potential)], dtype = tf.float32)
+		basis = schrodinger.create_basis(5)
+		a = schrodinger.v0(position, potential, basis).numpy()
+		b = [[ 6.0000000e+00], [ 1.8000000e+01], [ 1.0135167e-04], [-1.4448209e-05], [-6.0000000e+00]]
+		self.assertEqual(a[0], b[0])
+		self.assertEqual(a[1], b[1])
 	
-	# def test_term(self):
-	# 	function1 = schrodinger.term(0)
-	# 	function2 = lambda x: tf.math.cos(0 * x)
-	# 	self.assertTrue(tf.equal(function1(math.pi), function2(math.pi)))
-	# def test_create_basis(self):
+
+	def test_coefficient(self):
+		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
+		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
+		position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
+		potential = tf.constant(potential, shape = [1, len(potential)], dtype = tf.float32)
+		basis = schrodinger.create_basis(5)
+		coeff = schrodinger.coefficient(position, basis)
+		self.assertEqual(coeff.get_shape()[0], 5)
+
+
+
+
 
 
 

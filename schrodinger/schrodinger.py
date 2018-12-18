@@ -35,7 +35,7 @@ def term(i):
 	Create the ith term in the basis
 	"""
 	if i % 2 == 0:
-		return lambda x: tf.math.cos(i/2 * x)
+		return lambda x: tf.math.cos((i/2) * x)
 	else:
 		return lambda x: tf.math.sin((i + 1)/2 * x)
 
