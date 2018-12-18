@@ -18,6 +18,9 @@ Schrodinger
      :target: https://pyup.io/repos/github/chuangshi167/schrodinger/
      :alt: Updates
 
+.. image:: https://coveralls.io/repos/github/chuangshi167/Schrodinger/badge.svg?branch=master
+:target: https://coveralls.io/github/chuangshi167/Schrodinger?branch=master
+
 
 
 Python Boilerplate contains all the boilerplate you need to create a Python package.
