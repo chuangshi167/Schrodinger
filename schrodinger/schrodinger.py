@@ -16,7 +16,14 @@ def create_args():# pragma: no cover
 	args = parser.parse_args()
 	return args
 
+
 def open_file(filename):
+	"""
+	Args: filename (string)
+	Return: position(List), potential(List)
+
+	This function reads the data from the given file.
+	"""
 	position = []
 	potential = []
 	file = open(filename, 'r')
@@ -31,7 +38,10 @@ def open_file(filename):
 
 def term(i):
 	"""
-	Create the ith term in the basis
+	Args: i (int)
+	Return: function
+
+	Create the ith term in the basis based on Fourier polynomials 
 	"""
 	if i % 2 == 0:
 		return lambda x: tf.math.cos((i/2) * x)
@@ -40,10 +50,17 @@ def term(i):
 
 
 def create_basis(n):
-    basis = []
-    for i in range(n):
-        basis.append(term(i))
-    return basis
+	"""
+	Args: n(int)
+	Return: basis (list)
+
+	This function takes the number of elements (n) in the basis, and generates an n-term Fourier basis
+	"""
+
+	basis = []
+	for i in range(n):
+		basis.append(term(i))
+	return basis
 
 
 def v0(position, potential, basis):
@@ -110,22 +127,34 @@ def H_hat(c, n, v0_hat):
     return H
 
 def main():# pragma: no cover
+	"""
+	This is the main function which calculates the lowest energy states and its cooresponding wave function representation
+	"""
+	# Get the parameters based on user input
 	args = create_args()
 	c = args.c
 	n = args.size
 	file = args.file
+	# Read data from the input file
 	position, potential = open_file(file)
+	# Convert the data into tensors
 	position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
 	potential = tf.constant(potential, shape = [1, len(potential)], dtype = tf.float32)
+	# Create a Fourier basis based on the user input
 	basis = create_basis(n)
+	# Calculate the v0 vector
 	v = v0(position, potential, basis)
+	# Calculate the coefficient matrix
 	coeff = coefficient(position, basis)
+	# Calculate v0_hat
 	v0_hat = tf.linalg.solve(coeff, v)
+	# Calculate the Hamiltonian opteraor matrix
 	H = H_hat(c, len(basis), v0_hat)
+	# Solviing the eigen-value, eigent-vector question
 	e, v = tf.linalg.eigh(H)
+	# Print out the lowest energy state and its corresponding wave function representation
 	print(e[0].numpy())
 	print(v[0].numpy())
-	return True
 
 
 if __name__ == '__main__':

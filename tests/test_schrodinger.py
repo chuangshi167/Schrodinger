@@ -14,12 +14,18 @@ tf.enable_eager_execution()
 class TestSchrodinger(unittest.TestCase):
 
 	def test_open_file(self):
+		"""
+		Test if the open_file function works properly
+		"""
 		position, potential = schrodinger.open_file('potential_energy.dat')
 		self.assertEqual(position, [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477])
 		self.assertEqual(potential, [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0])
 	
 
 	def test_term(self):
+		"""
+		Test for the function which generates the terms for the basis
+		"""
 		term_one = schrodinger.term(0)
 		self.assertEqual(1, term_one(0).numpy())
 		term_two = schrodinger.term(1)
@@ -27,6 +33,9 @@ class TestSchrodinger(unittest.TestCase):
 
 
 	def test_create_basis(self):
+		"""
+		Test for the function which generates the basis based on user input
+		"""
 		basis = schrodinger.create_basis(3)
 		a = basis[0](0).numpy()
 		b = math.cos(0)
@@ -37,6 +46,9 @@ class TestSchrodinger(unittest.TestCase):
 
 
 	def test_v0(self):
+		"""
+		Test for the function which calculates the vo vector
+		"""
 		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
 		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
 		position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
@@ -49,6 +61,9 @@ class TestSchrodinger(unittest.TestCase):
 	
 
 	def test_coefficient(self):
+		"""
+		Test for the function which creates the coefficient matrix
+		"""
 		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
 		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
 		position = tf.constant(position, shape = [1, len(position)], dtype = tf.float32)
@@ -59,6 +74,9 @@ class TestSchrodinger(unittest.TestCase):
 	
 
 	def test_H_hat(self):
+		"""
+		Test for the function which calculates the H_hat
+		"""
 		position = [0.0, 1.57079, 3.14159, 4.71238, 6.28318, 7.85398, 9.42477]
 		potential = [0.0, 6.0, 0.0, -6.0, 0.0, 6.0, 0.0]
 		c = 1
