@@ -8,10 +8,21 @@ python:
   - 2.7
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox-travis
+install: 
+  - pip install python-coveralls
+  - pip install coverage
 
+before_install:
+  - pip install tensorflow
+  - pip install argparse
 # Command to run tests, e.g. python setup.py test
-script: tox
+script:
+  - coverage run --source=schrodinger setup.py test
+  - coverage report -m
+
+
+after_success: 
+  - coveralls
 
 # Assuming you have installed the travis-ci CLI tool, after you
 # create the Github repo and add it to Travis, run the
