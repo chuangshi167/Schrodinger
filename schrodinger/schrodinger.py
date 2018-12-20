@@ -171,8 +171,8 @@ def main():# pragma: no cover
 	# Solviing the eigen-value, eigent-vector question
 	e, v = tf.linalg.eigh(H)
 	# Print out the lowest energy state and its corresponding wave function representation
-	print(e[0].numpy())
-	print(v[0].numpy())
+	print("The lowst energy is: ", e[0].numpy())
+	print("The corresponding wave function is: ", v[0].numpy())
 
 
 if __name__ == '__main__':

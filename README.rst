@@ -22,11 +22,36 @@ Python Boilerplate contains all the boilerplate you need to create a Python pack
 * Free software: MIT license
 * Documentation: https://schrodinger.readthedocs.io.
 
+Descriotion
+-----------
 
-Features
---------
+This project is for CHE477, University of Rochester.
+It solves the 1-D Schrodinger question of a particle in a given potential field by converting it to an Eigenvector-Eigenvalue question.
 
-* TODO
+How to use
+----------
+
+This simulator can be invoked from the terminal, using the following command::
+
+	 python langevin/langevin.py
+ 
+There are a few preset parameters that can be modified in the argument.
+
+They are:
+
+- file  Type: string default = potential_energy.dat
+
+- c     Type: float default = 1.0
+
+- size  Type: int default = 5
+
+
+
+If you would like to change any of the preset parameters, using the following command::
+
+	python3 schrodinger/schrodinger.py --file potential_energy.dat --c 1.0 --size 5
+
+
 
 Credits
 -------
