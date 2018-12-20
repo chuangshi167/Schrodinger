@@ -56,6 +56,11 @@ If you would like to change any of the preset parameters, using the following co
 
 	python3 schrodinger/schrodinger.py --file potential_energy.dat --c 1.0 --size 5
 
+How to run the tests
+--------------------
+The tests can be invoked from the terminal, using the following command::
+
+	coverage run setup.py test
 
 
 Credits
