@@ -33,18 +33,23 @@ How to use
 
 This simulator can be invoked from the terminal, using the following command::
 
-	 python langevin/langevin.py
+	python3 schrodinger/schrodinger.py
  
 There are a few preset parameters that can be modified in the argument.
 
 They are:
 
-- file  Type: string default = potential_energy.dat
+* -- file  
+        * Type: string 
+        * default = potential_energy.dat
 
-- c     Type: float default = 1.0
+* -- c
+        * Type: float
+        * default = 1.0
 
-- size  Type: int default = 5
-
+* -- size
+        * Type: int
+        * default = 5
 
 
 If you would like to change any of the preset parameters, using the following command::
